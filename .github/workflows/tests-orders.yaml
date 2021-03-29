@@ -1,0 +1,11 @@
+name: tests-orders
+
+on: # when we are going to run the workflow
+  pull_request # will work for created/updated/reopened
+  
+jobs: # defined the things that we ant to do for 'on' step
+  build:
+    runs-on: ubuntu-latest # startup a vm on ubuntu
+    steps:
+      - uses: actions/checkout@v2 # take all the code out of our projects 
+      - run: cd orders && npm install && npm run test:ci # series of commands to run, test:ci is a new scripts that runs the tests once and then exits
