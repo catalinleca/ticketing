@@ -6,6 +6,7 @@ import { app } from './app';
  import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
 
 const start = async () => {
+    console.log('Starting Payments ...');
     if (!process.env.JWT_KEY) {
         throw new Error('JWT_KEY is required!')
     }
