@@ -1,25 +1,25 @@
-name: deploy-auth
+name: deploy-tickets
 
 on:
   push: # close / merge a RP
     branches:
       - master
     paths:
-      - 'auth/**'
+      - 'tickets/**'
 
 jobs:
   build: # job id
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # checkout all code inside of our repo
-      - run: cd auth && docker build -t catalinleca95/auth . # build the image and push it to dockerhub
+      - run: cd tickets && docker build -t catalinleca95/tickets . # build the image and push it to dockerhub
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env: # need to add the env vars
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker push catalinleca95/auth
+      - run: docker push catalinleca95/tickets
       - uses: digitalocean/action-doctl@v2 # install doctl
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save ticketing # switch to digital ocean cluster with config files
-      - run: kubectl rollout restart deployment auth-depl # update deployment, name is from infra/<service>-depl -> metadata: name
+      - run: kubectl rollout restart deployment tickets-depl # update deployment, name is from infra/<service>-depl -> metadata: name
