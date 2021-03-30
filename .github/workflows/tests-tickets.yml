@@ -3,7 +3,7 @@ name: tests-tickets
 on: # when we are going to run the workflow
   pull_request: # will work for created/updated/reopened
     paths:
-      - 'auth/**'
+      - 'tickets/**'
 
 jobs: # defined the things that we ant to do for 'on' step
   build:
